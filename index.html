@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المركز</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.horizons.dz/wp-content/uploads/2023/10/min-prof.png') no-repeat center center;
+            background-size: cover;
+            filter: saturate(150%) brightness(85%);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .admin-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .admin-button, .logout-button {
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .admin-button { background-color: blue; }
+        .logout-button { background-color: red; display: none; }
+
+        .header-title {
+            font-size: 36px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .custom-image {
+            width: 250px;
+            height: auto;
+        }
+
+        .header-title .amazigh {
+            font-size: 54px;
+        }
+
+        .container {
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1cm;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+
+        .title-box, .editable-box {
+            width: 100%;
+            min-height: 40px;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            background: transparent;
+            font-weight: bold;
+        }
+
+        .editable-box {
+            min-height: 50px;
+            text-align: right;
+            font-weight: normal;
+        }
+
+        .format-controls {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+    </style>
+    <script>
+        let isAdmin = false;
+
+        function toggleAdmin() {
+            if (!isAdmin) {
+                let password = prompt("أدخل كلمة المرور للمسؤول :");
+                if (password === "0000") {
+                    isAdmin = true;
+                    alert("تم تفعيل وضع المسؤول");
+                    document.querySelector(".admin-button").style.display = "none";
+                    document.querySelector(".logout-button").style.display = "inline-block";
+                    enableEditing();
+                } else {
+                    alert("كلمة المرور غير صحيحة");
+                }
+            }
+        }
+        
+        function logoutAdmin() {
+            isAdmin = false;
+            alert("تم تعطيل وضع المسؤول");
+            document.querySelector(".logout-button").style.display = "none";
+            document.querySelector(".admin-button").style.display = "inline-block";
+            disableEditing();
+        }
+        
+        function enableEditing() {
+            document.querySelectorAll('.editable-box, .title-box').forEach(box => {
+                box.setAttribute('contenteditable', 'true');
+                box.parentElement.querySelector('.format-controls').style.display = 'block';
+            });
+        }
+        
+        function disableEditing() {
+            document.querySelectorAll('.editable-box, .title-box').forEach(box => {
+                box.setAttribute('contenteditable', 'false');
+                box.parentElement.querySelector('.format-controls').style.display = 'none';
+            });
+        }
+
+        function changeFontSize(select, id) {
+            document.getElementById(id).style.fontSize = select.value + 'px';
+        }
+
+        function changeFontColor(select, id) {
+            document.getElementById(id).style.color = select.value;
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="admin-controls">
+            <button class="admin-button" onclick="toggleAdmin()">وضع المسؤول</button>
+            <button class="logout-button" onclick="logoutAdmin()">الخروج من المسؤول</button>
+        </div>
+
+        <div class="header-title">
+            <strong>الجمهورية الجزائرية الديمقراطية الشعبية</strong>
+            <span class="amazigh">ⴰⵎⴻⵣⵉⵖ ⴷⵓ ⵍⴷⵉⴽⵉⴷⴰ ⵜⴰⵏⴰⵎⵓⵔⴰⵏⴰ</span>
+        </div>
+
+        <img src="https://cdn.pixabay.com/animation/2022/07/31/19/29/19-29-23-533_512.gif" alt="GIF animé" class="custom-image">
+
+        <h1>INSFP Didouche Mourad Annaba</h1>
+    </div>
+    
+    <div class="container">
+        <script>
+            for (let i = 1; i <= 8; i++) {
+                document.write(`
+                    <div class="box-container">
+                        <div class="format-controls">
+                            <input type="number" min="5" max="30" value="16" onchange="changeFontSize(this, 'editable-box-${i}')">
+                            <input type="color" onchange="changeFontColor(this, 'editable-box-${i}')">
+                        </div>
+                        <div class="title-box" id="title-box-${i}" contenteditable="false">العنوان هنا...</div>
+                        <div class="editable-box" id="editable-box-${i}" contenteditable="false">اكتب هنا...</div>
+                    </div>
+                `);
+            }
+        </script>
+    </div>
+</body>
+<p style="color: blue; text-decoration: underline; cursor: pointer;" onclick="window.location.href='autre_page.html'">
+    Si tu veux nous contacter
+</p>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المركز</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clock {
+            font-size: 18px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .info-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .info-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .arrow {
+            font-size: 24px;
+            position: absolute;
+            color: black;
+        }
+
+        .arrow-up { top: -30px; left: 50%; transform: translateX(-50%); }
+        .arrow-left { top: 50%; left: -30px; transform: translateY(-50%); }
+        .arrow-right { top: 50%; right: -30px; transform: translateY(-50%); }
+    </style>
+    <script>
+        function updateClock() {
+            let optionsTime = { timeZone: 'Africa/Algiers', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            let optionsDate = { timeZone: 'Africa/Algiers', day: '2-digit', month: '2-digit', year: 'numeric' };
+            let timeString = new Intl.DateTimeFormat('fr-FR', optionsTime).format(new Date());
+            let dateString = new Intl.DateTimeFormat('fr-FR', optionsDate).format(new Date());
+            
+            let hijriDate = new Intl.DateTimeFormat('ar-SA', { day: '2-digit', month: '2-digit', year: 'numeric', calendar: 'islamic' }).format(new Date());
+            
+            document.getElementById('clock').innerHTML = dateString + "<br>" + hijriDate + " هـ<br>" + timeString;
+        }
+        setInterval(updateClock, 1000);
+    </script>
+</head>
+<body>
+    <div id="clock" class="clock"></div>
+    
+    <div class="info-container">
+        <div class="arrow arrow-up">↓</div>
+        <div class="arrow arrow-left">⬅</div>
+        <div class="arrow arrow-right">➡</div>
+        <p class="info-link" onclick="window.location.href='information.html'">Information</p>
+    </div>
+</body>
+</html>
+
+</html>
