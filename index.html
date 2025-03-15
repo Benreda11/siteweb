@@ -277,54 +277,35 @@
     </div>
 </body>
 </html>
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire avec Firebase</title>
+    <title>Sauvegarde Auto avec Firebase</title>
 </head>
 <body>
 
-    <h2>Sauvegarde avec Firebase</h2>
-    <input type="text" id="nom" placeholder="Entrez votre nom">
-    <button onclick="sauvegarder()">Sauvegarder</button>
-
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <h2>Entrez du texte (sauvegardé automatiquement) :</h2>
+    <input type="text" id="textInput" placeholder="Écris quelque chose...">
     
-    <script>
+   // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyANsBLwKOUXsKy5rUIbnQMQ0oe_mOBpSMQ",
-  authDomain: "projet-f7ee6.firebaseapp.com",
-  databaseURL: "https://projet-f7ee6-default-rtdb.firebaseio.com",
-  projectId: "projet-f7ee6",
-  storageBucket: "projet-f7ee6.firebasestorage.app",
-  messagingSenderId: "270562513538",
-  appId: "1:270562513538:web:bef439888bc404c6ceda9b"
+  apiKey: "AIzaSyAkxuLIBLzlG73c29FnaDnps8jjM2eb1aM",
+  authDomain: "aaaa-1ed32.firebaseapp.com",
+  projectId: "aaaa-1ed32",
+  storageBucket: "aaaa-1ed32.firebasestorage.app",
+  messagingSenderId: "1026078718158",
+  appId: "1:1026078718158:web:cdaa0f55509fe59fc7389f",
+  measurementId: "G-H3301Q9EHQ"
 };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// Sauvegarder les données
-        function sauvegarder() {
-            let nom = document.getElementById("nom").value;
-            database.ref("utilisateurs/nom").set(nom);
-            alert("Données sauvegardées !");
-        }
-
-        // Charger les données à l'ouverture du site
-        database.ref("utilisateurs/nom").on("value", function(snapshot) {
-            document.getElementById("nom").value = snapshot.val() || "";
-        });
-    </script>
 
 </body>
 </html>
